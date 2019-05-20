@@ -20,4 +20,9 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 model.fit(x_train, y_train, epochs=5)
-model.evaluate(x_test, y_test)
+
+test_loss, test_acc = model.evaluate(x_test, y_test)
+print("The Loss is", test_loss, "And the Testing Accuracy is", test_acc)
+
+model.save('../model/regular_nn.model')
+print("Model saved as 'regular_nn.model'")
