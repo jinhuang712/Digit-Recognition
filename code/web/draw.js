@@ -1,7 +1,5 @@
 let painting = false;
 
-// todo fix problem where cursor does not point directly to where it paints
-
 function load_canvas() {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", finishPainting);
@@ -30,10 +28,11 @@ function finishPainting() {
 function draw(e) {
     if (!painting) return;
 
-    ctx.lineTo(e.clientX, e.clientY);
+    let rect = canvas.getBoundingClientRect();
+    ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(e.clientX, e.clientY);
+    ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
 }
 
 function check_empty() {
