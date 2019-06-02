@@ -14,7 +14,9 @@ window.onload = function () {
     let clear = document.getElementById("clear");
     clear.onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
+    };
+    load_model();
+    setInterval(predict, 500);
 };
 
 function startPainting(e) {
@@ -28,6 +30,7 @@ function finishPainting() {
 }
 
 function draw(e) {
+    // todo move mouse away from canvas stops painting
     if (!painting) return;
 
     ctx.lineWidth = 10;

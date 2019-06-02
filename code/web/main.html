@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name ="author" content="Jin Huang">
     <title>MNIST</title>
-    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
     <script src="main.js"></script>
+    <script src="data.js"></script>
+    <style>
+        #canvas{
+            border: 3px solid #000;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <canvas id="canvas" width="200" height="200"></canvas>
+    <canvas id="canvas" width="196" height="196"></canvas>
 </div>
 <div>
     <button id="clear">Clear</button>
+    <label id="result">Don't Know</label>
 </div>
 </body>
 </html>

@@ -1,0 +1,8 @@
+{
+  "name": "Number-ML",
+  "version": "1.0.0",
+  "dependencies": {
+    "@tensorflow/tfjs": "^1.1.2",
+    "@tensorflow/tfjs-core": "latest"
+  }
+}
