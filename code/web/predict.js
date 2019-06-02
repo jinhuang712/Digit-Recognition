@@ -5,10 +5,13 @@ async function load_model() {
 }
 
 async function predict() {
-    // todo when empty canvas does not predict
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    if (check_empty()) {
+        document.getElementById("result").innerHTML = "Don't Know";
+        return;
+    }
     let input = tf.tensor2d(scale(imageData));
-    let output = await model.predict(input.reshape([1, 28, 28]));
+    let output = await model.predict(input.reshape([1, 28, 28));
     let prediction = Array.from(output.argMax(1).dataSync());
     document.getElementById("result").innerHTML = prediction[0];
 }
