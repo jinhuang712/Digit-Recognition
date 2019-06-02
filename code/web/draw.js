@@ -1,5 +1,7 @@
 let painting = false;
 
+// todo fix problem where cursor does not point directly to where it paints
+
 function load_canvas() {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", finishPainting);
@@ -12,6 +14,7 @@ function load_canvas() {
     ctx.lineWidth = 10;
     ctx.lineCap = "round";
 
+    canvas.style.cursor="crosshair";
 }
 
 function startPainting(e) {
@@ -41,8 +44,6 @@ function check_empty() {
     }
     return sum === 0;
 }
-
-// todo change cursor when mouse is in the canvas region
 
 document.onmousemove = function (e) {
     let rect = canvas.getBoundingClientRect();
