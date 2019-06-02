@@ -5,6 +5,7 @@ async function load_model() {
     model = await tf.loadLayersModel("../../model/cnn/cnn.json");
 }
 
+// todo prints "don't know" when probabilities aren't obvious
 async function predict() {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     if (check_empty()) {

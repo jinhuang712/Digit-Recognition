@@ -1,16 +1,18 @@
-let clear;
+let painting = false;
 
 function load_canvas() {
     canvas.addEventListener("mousedown", startPainting);
     canvas.addEventListener("mouseup", finishPainting);
     canvas.addEventListener("mousemove", draw);
-    clear = document.getElementById("clear");
+    let clear = document.getElementById("clear");
     clear.onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     };
-}
 
-// todo move mouse away from canvas stops painting
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round";
+
+}
 
 function startPainting(e) {
     painting = true;
@@ -25,9 +27,6 @@ function finishPainting() {
 function draw(e) {
     if (!painting) return;
 
-    ctx.lineWidth = 10;
-    ctx.lineCap = "round";
-
     ctx.lineTo(e.clientX, e.clientY);
     ctx.stroke();
     ctx.beginPath();
@@ -38,7 +37,17 @@ function check_empty() {
     let image_data = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let sum = 0;
     for (let i = 0; i < image_data.data.length; i++) {
-        sum+= image_data.data[i];
+        sum += image_data.data[i];
     }
     return sum === 0;
 }
+
+// todo change cursor when mouse is in the canvas region
+
+document.onmousemove = function (e) {
+    let rect = canvas.getBoundingClientRect();
+    if (e.clientX >= rect.right || e.clientX <= rect.left ||
+        e.clientY >= rect.bottom || e.clientY <= rect.top) {
+        finishPainting();
+    }
+};
