@@ -1,7 +1,8 @@
 let model;
 
 async function load_model() {
-    model = await tf.loadLayersModel("../../model/model.json");
+    // model = await tf.loadLayersModel("../../model/rnn/rnn.json");
+    model = await tf.loadLayersModel("../../model/cnn/cnn.json");
 }
 
 async function predict() {
@@ -11,7 +12,8 @@ async function predict() {
         return;
     }
     let input = tf.tensor2d(scale(imageData));
-    let output = await model.predict(input.reshape([1, 28, 28));
+    // let output = await model.predict(input.reshape([1, 28, 28]));
+    let output = await model.predict(input.reshape([1, 28, 28, 1]));
     let prediction = Array.from(output.argMax(1).dataSync());
     document.getElementById("result").innerHTML = prediction[0];
 }
