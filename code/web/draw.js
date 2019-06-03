@@ -51,3 +51,14 @@ document.onmousemove = function (e) {
         finishPainting();
     }
 };
+
+function show_input(input_data) {
+    let small_canvas = document.getElementById("small-canvas");
+    let imageData = small_canvas.getContext("2d").createImageData(28, 28);
+    for (let i = 0; i < 28; i++) {
+        for (let j = 0; j < 28; j++) {
+            imageData.data[i*4*28 + j*4 + 3] = input_data[i][j];
+        }
+    }
+    small_canvas.getContext("2d").putImageData(imageData, 0, 0);
+}

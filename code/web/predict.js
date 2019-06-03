@@ -12,7 +12,9 @@ async function predict() {
         document.getElementById("result").innerHTML = "Don't Know";
         return;
     }
-    let input = tf.tensor2d(scale(imageData));
+    let input_array = scale(imageData);
+    let input = tf.tensor2d(input_array);
+    show_input(input_array);
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
     let prediction = Array.from(output.argMax(1).dataSync());
