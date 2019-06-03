@@ -7,6 +7,8 @@ function load_canvas() {
     let clear = document.getElementById("clear");
     clear.onclick = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let small_canvas = document.getElementById("small-canvas");
+        small_canvas.getContext("2d").clearRect(0, 0, small_canvas.width, small_canvas.height);
     };
 
     ctx.lineWidth = 10;
@@ -62,3 +64,5 @@ function show_input(input_data) {
     }
     small_canvas.getContext("2d").putImageData(imageData, 0, 0);
 }
+
+// todo add charts to show probabilities
