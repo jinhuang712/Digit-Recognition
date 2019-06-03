@@ -14,6 +14,7 @@ async function predict() {
     }
     let input_array = scale(imageData);
     let input = tf.tensor2d(input_array);
+    input = tf.div(input, tf.tensor([255.0]));
     show_input(input_array);
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
@@ -33,7 +34,7 @@ function scale(imageData) {
     for (let i = 0; i < 28; i++) {
         for (let j = 0; j < 28; j++) {
             input_data[i][j] = average_pixel(grey_scaled_data, i * scale, j * scale,
-                                             (i + 1) * scale - 1, (j + 1) * scale - 1)
+                                             (i + 1) * scale - 1, (j + 1) * scale - 1);
         }
     }
     return input_data;
