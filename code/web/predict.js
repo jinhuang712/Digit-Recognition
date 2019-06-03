@@ -7,37 +7,41 @@ async function load_model() {
 
 // todo prints "don't know" when probabilities aren't obvious
 async function predict() {
-    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    if (check_empty()) {
+    if (check_if_canvas_empty()) {
         document.getElementById("result").innerHTML = "Don't Know";
         return;
     }
-    let input_array = scale(imageData);
-    let input = tf.tensor2d(input_array);
-    input = tf.div(input, tf.tensor([255.0]));
-    show_input(input_array);
+    let input = extract();
+    display_input_tensor();
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
     let prediction = Array.from(output.argMax(1).dataSync());
     document.getElementById("result").innerHTML = prediction[0];
 }
 
+function extract() {
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let tensor = tf.tensor2d(scale(imageData));
+    tensor = tf.div(tensor, tf.tensor([255.0]));
+    return tensor;
+}
+
 function scale(imageData) {
-    let grey_scaled_data = make_array([imageData.width, imageData.height], 0);
+    let imageData_grey_scaled = make_array([imageData.width, imageData.height], 0);
     for (let i = 0; i < imageData.data.length; i += 4) {
-        let coordinate_x = Math.floor(i / 4 / 196);
-        let coordinate_y = Math.floor(i / 4 % 196);
-        grey_scaled_data[coordinate_x][coordinate_y] = imageData.data[i + 3];
+        let x = Math.floor(i / 4 / 196);
+        let y = Math.floor(i / 4 % 196);
+        imageData_grey_scaled[x][y] = imageData.data[i + 3];
     }
-    let input_data = make_array([28, 28], 0);
+    let scaled_input = make_array([28, 28], 0);
     let scale = 196 / 28;
     for (let i = 0; i < 28; i++) {
         for (let j = 0; j < 28; j++) {
-            input_data[i][j] = average_pixel(grey_scaled_data, i * scale, j * scale,
+            scaled_input[i][j] = average_pixel(imageData_grey_scaled, i * scale, j * scale,
                                              (i + 1) * scale - 1, (j + 1) * scale - 1);
         }
     }
-    return input_data;
+    return scaled_input;
 }
 
 function average_pixel(image, x, y, x_end, y_end) {
@@ -62,5 +66,3 @@ let make_array = function (dims, arr) {
     }
     return arr;
 };
-
-// todo add refitting

@@ -37,11 +37,11 @@ function draw(e) {
     ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
 }
 
-function check_empty() {
-    let image_data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+function check_if_canvas_empty() {
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     let sum = 0;
-    for (let i = 0; i < image_data.data.length; i++) {
-        sum += image_data.data[i];
+    for (let i = 0; i < imageData.data.length; i++) {
+        sum += imageData.data[i];
     }
     return sum === 0;
 }
@@ -57,15 +57,16 @@ document.onmousemove = function (e) {
     }
 };
 
-function show_input(input_data) {
+function display_input_tensor() {
+    let imageData_scaled = scale(ctx.getImageData(0, 0, canvas.width, canvas.height));
     let small_canvas = document.getElementById("small-canvas");
-    let imageData = small_canvas.getContext("2d").createImageData(28, 28);
+    let newImageData = small_canvas.getContext("2d").createImageData(28, 28);
     for (let i = 0; i < 28; i++) {
         for (let j = 0; j < 28; j++) {
-            imageData.data[i*4*28 + j*4 + 3] = input_data[i][j];
+            newImageData.data[i*4*28 + j*4 + 3] = imageData_scaled[i][j];
         }
     }
-    small_canvas.getContext("2d").putImageData(imageData, 0, 0);
+    small_canvas.getContext("2d").putImageData(newImageData, 0, 0);
 }
 
 // todo add charts to show probabilities
