@@ -62,3 +62,5 @@ let make_array = function (dims, arr) {
     }
     return arr;
 };
+
+// todo add refitting

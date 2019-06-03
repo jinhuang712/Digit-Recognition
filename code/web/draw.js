@@ -46,6 +46,9 @@ function check_empty() {
     return sum === 0;
 }
 
+// todo Uncaught TypeError: Cannot read property 'getBoundingClientRect' of undefined
+//      at HTMLDocument.document.onmousemove
+//      on initialized
 document.onmousemove = function (e) {
     let rect = canvas.getBoundingClientRect();
     if (e.clientX >= rect.right || e.clientX <= rect.left ||
