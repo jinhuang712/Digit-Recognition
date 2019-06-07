@@ -1,8 +1,12 @@
 {
-  "name": "Number-ML",
+  "name": "Digit-Recognition",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jinhuang712/Digit-Recognition.git"
+  },
   "version": "1.0.0",
   "dependencies": {
-    "@tensorflow/tfjs": "^1.1.2",
-    "@tensorflow/tfjs-core": "latest"
+    "@tensorflow/tfjs": "latest",
+    "@tensorflow/tfjs-core": "^1.1.2"
   }
 }
