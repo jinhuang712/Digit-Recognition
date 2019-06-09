@@ -3,6 +3,11 @@ let model;
 async function load_model() {
     // model = await tf.loadLayersModel("../../model/rnn/rnn.json");
     model = await tf.loadLayersModel("../../model/cnn/cnn.json");
+    await model.compile({
+                      optimizer: 'adam',
+                      loss: 'sparseCategoricalCrossentropy',
+                      metrics: ['accuracy']
+                  });
 }
 
 // todo prints "don't know" when probabilities aren't obvious
@@ -15,15 +20,36 @@ async function predict() {
     display_input_tensor();
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
+    // console.log(output);
+    // console.log(output.argMax(1));
+    // console.log(output.argMax(1).dataSync());
+    // console.log(Array.from(output.argMax(1).dataSync()));
     let prediction = Array.from(output.argMax(1).dataSync());
     document.getElementById("result").innerHTML = prediction[0];
 }
 
+async function fit(input) {
+    if (isNaN(input)) {
+        alert("Not a Number");
+        return;
+    }
+    if (check_if_canvas_empty()) {
+        document.getElementById("result").innerHTML = "Don't Know";
+        return;
+    }
+    let tensor = extract();
+    let probability_input = make_array([10, 1], 0);
+    probability_input[input][0] = 1;
+    await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor2d(probability_input).reshape([10, 1]), {
+        epoch: 1
+    });
+    // todo silent update model
+    // await model.save('downloads://model');
+}
+
 function extract() {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let tensor = tf.tensor2d(scale(imageData));
-    tensor = tf.div(tensor, tf.tensor([255.0]));
-    return tensor;
+    return scale(imageData);
 }
 
 function scale(imageData) {
