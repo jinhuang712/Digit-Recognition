@@ -34,13 +34,11 @@ async function fit(input) {
         return;
     }
     if (check_if_canvas_empty()) {
-        document.getElementById("result").innerHTML = "Don't Know";
+        alert("Canvas Empty");
         return;
     }
     let tensor = extract();
-    let probability_input = make_array([10, 1], 0);
-    probability_input[input][0] = 1;
-    await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor2d(probability_input).reshape([10, 1]), {
+    await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
         epoch: 1
     });
     // todo silent update model
@@ -49,7 +47,7 @@ async function fit(input) {
 
 function extract() {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    return scale(imageData);
+    return tf.tensor2d(scale(imageData));
 }
 
 function scale(imageData) {
