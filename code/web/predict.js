@@ -3,6 +3,11 @@ let model;
 async function load_model() {
     // model = await tf.loadLayersModel("../../model/rnn/rnn.json");
     model = await tf.loadLayersModel("../../model/cnn/cnn.json");
+    await model.compile({
+                      optimizer: 'adam',
+                      loss: 'sparseCategoricalCrossentropy',
+                      metrics: ['accuracy']
+                  });
 }
 
 // todo prints "don't know" when probabilities aren't obvious
@@ -15,15 +20,35 @@ async function predict() {
     display_input_tensor();
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
+    // console.log(output);
+    // console.log(output.argMax(1));
+    // console.log(output.argMax(1).dataSync());
+    // console.log(Array.from(output.argMax(1).dataSync()));
     let prediction = Array.from(output.argMax(1).dataSync());
     document.getElementById("result").innerHTML = prediction[0];
 }
 
+async function fit(input) {
+    if (isNaN(input)) {
+        alert("Not a Number");
+        return;
+    }
+    if (check_if_canvas_empty()) {
+        alert("Canvas Empty");
+        return;
+    }
+    let tensor = extract();
+    await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
+        epoch: 1
+    });
+    // NOTE:    silent update model unable to achieve
+    //          and not much value, since user input data for digit recognition training won't
+    //          result in a big shift in accuracy as it isn't very large sample
+}
+
 function extract() {
     let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    let tensor = tf.tensor2d(scale(imageData));
-    tensor = tf.div(tensor, tf.tensor([255.0]));
-    return tensor;
+    return tf.tensor2d(scale(imageData));
 }
 
 function scale(imageData) {
