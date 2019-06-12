@@ -41,8 +41,9 @@ async function fit(input) {
     await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
         epoch: 1
     });
-    // todo silent update model
-    // await model.save('downloads://model');
+    // NOTE:    silent update model unable to achieve
+    //          and not much value, since user input data for digit recognition training won't
+    //          result in a big shift in accuracy as it isn't very large sample
 }
 
 function extract() {
