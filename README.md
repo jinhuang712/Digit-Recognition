@@ -9,3 +9,6 @@ The `CNN` was primarily used for better accuracy.
 The application is able to predict which *digit number* (from 0 to 9) the user has drawn on the canvas. This is achieved by machine learning algorithms and `javascript` implementations.
 
 More, user is able to make corrections to the prediction, providing a correct answer. The model would then adjust itself.
+
+### Preview
+![Alt](demo/demo.png)
