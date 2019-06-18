@@ -1,8 +1,8 @@
 let model;
 
 async function load_model() {
-    // model = await tf.loadLayersModel("../../model/rnn/rnn.json");
-    model = await tf.loadLayersModel("../../model/cnn/cnn.json");
+    // model = await tf.loadLayersModel("../model/rnn/rnn.json");
+    model = await tf.loadLayersModel("../model/cnn/cnn.json");
     await model.compile({
                       optimizer: 'adam',
                       loss: 'sparseCategoricalCrossentropy',

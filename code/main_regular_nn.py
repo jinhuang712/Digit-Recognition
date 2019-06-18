@@ -24,5 +24,5 @@ model.fit(x_train, y_train, epochs=5)
 test_loss, test_acc = model.evaluate(x_test, y_test)
 print("The Loss is", test_loss, "And the Testing Accuracy is", test_acc)
 
-model.save('../model/regular_nn.model')
-print("Model saved as 'regular_nn.model'")
+model.save('../model/rnn/rnn.model')
+print("Model saved as 'rnn.model'")

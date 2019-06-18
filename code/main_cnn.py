@@ -33,5 +33,5 @@ model.fit(train_images, train_labels, epochs=5)
 test_loss, test_acc = model.evaluate(test_images, test_labels)
 print("The Loss is", test_loss, "And the Testing Accuracy is", test_acc)
 
-model.save('../model/convolutional_nn.model')
-print("Model saved as 'convolutional_nn.model'")
+model.save('../model/cnn/cnn.model')
+print("Model saved as 'cnn.model'")
