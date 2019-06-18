@@ -13,5 +13,5 @@ More, user is able to make corrections to the prediction, providing a correct an
 # How to Run
 This must be ran in a server, i.e. a **LocalHost**. You should open `code/main.html` in browser through your IDE.
 
-### Preview
-![Alt](demo/demo.png)
+# Preview
+![Alt](demo/demo.gif)
