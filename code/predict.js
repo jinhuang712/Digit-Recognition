@@ -1,8 +1,7 @@
 let model;
 
 async function load_model() {
-    // model = await tf.loadLayersModel("../model/rnn/rnn.json");
-    model = await tf.loadLayersModel("../model/cnn/cnn.json");
+    model = await tf.loadLayersModel("../model/cnn/json/model.json");
     await model.compile({
                       optimizer: 'adam',
                       loss: 'sparseCategoricalCrossentropy',
@@ -39,7 +38,7 @@ async function fit(input) {
     }
     let tensor = extract();
     await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
-        epoch: 1
+        epoch: 10
     });
     // NOTE:    silent update model unable to achieve
     //          and not much value, since user input data for digit recognition training won't
