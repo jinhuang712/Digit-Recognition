@@ -7,14 +7,14 @@ let ctx;
 
 // todo fix initial ReferenceError: require is not defined
 
-window.onload = async function () {
+window.onload = async function() {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     load_canvas();
     await load_model();
     setInterval(predict, 100);
     let correction = document.getElementById("correction");
-    correction.onclick = async function () {
+    correction.onclick = async function() {
         let input = prompt("What is the correct answer?");
         if (input != null) {
             // todo fit show overlay still unresponsive

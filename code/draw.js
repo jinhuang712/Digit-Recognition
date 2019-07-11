@@ -10,13 +10,13 @@ function load_canvas() {
     canvas.style.cursor = "crosshair";
 
     let clear = document.getElementById("clear");
-    clear.onclick = function () {
+    clear.onclick = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         let small_canvas = document.getElementById("small-canvas");
         small_canvas.getContext("2d").clearRect(0, 0, small_canvas.width, small_canvas.height);
     };
 
-    document.onmousemove = function (e) {
+    document.onmousemove = function(e) {
         let rect = canvas.getBoundingClientRect();
         if (e.clientX >= rect.right || e.clientX <= rect.left ||
             e.clientY >= rect.bottom || e.clientY <= rect.top) {
@@ -68,7 +68,7 @@ function display_input_tensor() {
 
 function show_loading_overlay() {
     $("#canvas").LoadingOverlay("show", {
-        background:  "rgba(255, 255, 255, 0.5)"
+        background: "rgba(255, 255, 255, 0.5)"
     });
 }
 
