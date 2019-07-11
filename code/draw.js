@@ -66,4 +66,14 @@ function display_input_tensor() {
     small_canvas.getContext("2d").putImageData(newImageData, 0, 0);
 }
 
+function show_loading_overlay() {
+    $("#canvas").LoadingOverlay("show", {
+        background:  "rgba(255, 255, 255, 0.5)"
+    });
+}
+
+function hide_loading_overlay() {
+    $("#canvas").LoadingOverlay("hide", true);
+}
+
 // todo add charts to show probabilities

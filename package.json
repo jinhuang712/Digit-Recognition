@@ -9,6 +9,7 @@
   "private": true,
   "dependencies": {
     "@tensorflow/tfjs": "latest",
+    "gasparesganga-jquery-loading-overlay": "^2.1.6",
     "rollup": "latest"
   }
 }
