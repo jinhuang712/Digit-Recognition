@@ -3,7 +3,7 @@ function extract() {
     return centralize(imageData, scale(get_grey_scaled_image(imageData)));
 }
 
-// todo improve small hand-writing
+// todo improve inconsistent trim
 function centralize(imageData, scaled_image) {
     let scale_ratio = 196 / 28;
     let corners = find_corners(scaled_image);
@@ -16,9 +16,13 @@ function centralize(imageData, scaled_image) {
     for (let i = 0; i < 4; i++) {
         corners[i] = (corners[i] * scale_ratio) | 0;
     }
-    let expanded_corners = expand_absolute_corners(corners, scale_ratio);
+
+    // expand
+    let expanded_corners = expand_absolute_corners(corners);
+    let width = expanded_corners[3] - expanded_corners[1];
+    let height = expanded_corners[2] - expanded_corners[0];
     let image_grey_scaled = get_grey_scaled_image(imageData);
-    let image_centralized = make_array([imageData.width, imageData.height], 0);
+    let image_centralized = make_array([width, height], 0);
     for (let i = expanded_corners[1] | 0, x = 0; i < (expanded_corners[3] | 0); i++, x++) {
         for (let j = expanded_corners[0] | 0, y = 0; j < (expanded_corners[2] | 0); j++, y++) {
             let temp = 0;
@@ -28,12 +32,14 @@ function centralize(imageData, scaled_image) {
             image_centralized[x][y] = temp;
         }
     }
+
+    // scale to 28 x 28 input
     return scale(image_centralized);
 }
 
 function scale(image_grey_scaled) {
     let scaled_input = make_array([28, 28], 0);
-    let scale = 196 / 28;
+    let scale = image_grey_scaled.length / 28;
     for (let i = 0; i < 28; i++) {
         for (let j = 0; j < 28; j++) {
             scaled_input[i][j] = average_pixel(image_grey_scaled, i * scale, j * scale,
@@ -66,6 +72,8 @@ function find_corners(image) {
             if (i > corners[3]) corners[3] = i;
         }
     }
+    if (corners.toString() === [28, 28, 0, 0].toString())
+        corners = [3, 3, 25, 25];
     return corners;
 }
 
@@ -77,13 +85,22 @@ function find_center(corners) {
     return result;
 }
 
-function expand_absolute_corners(absolute_corner, scale_ratio) {
-    let x_delta = (28 - (absolute_corner[3] - absolute_corner[1]) / scale_ratio) / 2 * scale_ratio;
-    let y_delta = (28 - (absolute_corner[2] - absolute_corner[0]) / scale_ratio) / 2 * scale_ratio;
+function expand_absolute_corners(absolute_corner) {
+    let radius = 0;
+    if (absolute_corner[3] - absolute_corner[1] > absolute_corner[2] - absolute_corner[0])
+        radius = absolute_corner[3] - absolute_corner[1];
+    else
+        radius = absolute_corner[2] - absolute_corner[0];
+    radius = radius + 2 * radius / 22 * 3;
+    let x_delta = (radius - (absolute_corner[3] - absolute_corner[1])) / 2;
+    let y_delta = (radius - (absolute_corner[2] - absolute_corner[0])) / 2;
     absolute_corner[1] -= x_delta;
     absolute_corner[3] += x_delta;
     absolute_corner[0] -= y_delta;
     absolute_corner[2] += y_delta;
+    for (let i = 0; i < absolute_corner.length; i++) {
+        absolute_corner[i] = parseInt(absolute_corner[i], 10);
+    }
     return absolute_corner;
 }
 
@@ -91,6 +108,8 @@ function average_pixel(image, x, y, x_end, y_end) {
     let sum = 0;
     for (let i = x; i < x_end; i++) {
         for (let j = y; j < y_end; j++) {
+            i = i | 0;
+            j = j | 0;
             sum += image[i][j];
         }
     }
