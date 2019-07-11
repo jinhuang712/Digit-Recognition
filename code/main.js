@@ -7,6 +7,8 @@ let ctx;
 
 // todo fix initial ReferenceError: require is not defined
 
+// todo fix vague definition of empty canvas
+
 window.onload = async function() {
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");

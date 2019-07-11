@@ -9,7 +9,7 @@ async function load_model() {
                             loss: 'sparseCategoricalCrossentropy',
                             metrics: ['accuracy']
                         });
-    await model.predict(extract().reshape([1, 28, 28, 1]));
+    await model.predict(tf.tensor2d(extract()).reshape([1, 28, 28, 1]));
     hide_loading_overlay();
 }
 
@@ -19,7 +19,7 @@ async function predict() {
         document.getElementById("result").innerHTML = "Don't Know";
         return;
     }
-    let input = extract();
+    let input = tf.tensor2d(extract());
     display_input_tensor();
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
@@ -40,7 +40,7 @@ async function fit(input) {
         alert("Canvas Empty");
         return;
     }
-    let tensor = extract();
+    let tensor = tf.tensor2d(extract());
     show_loading_overlay();
     await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
         epoch: 10
