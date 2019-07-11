@@ -55,7 +55,7 @@ function check_if_canvas_empty() {
 }
 
 function display_input_tensor() {
-    let imageData_scaled = scale(ctx.getImageData(0, 0, canvas.width, canvas.height));
+    let imageData_scaled = extract(ctx.getImageData(0, 0, canvas.width, canvas.height));
     let small_canvas = document.getElementById("small-canvas");
     let newImageData = small_canvas.getContext("2d").createImageData(28, 28);
     for (let i = 0; i < 28; i++) {
