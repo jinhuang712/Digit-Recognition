@@ -3,7 +3,7 @@ let model;
 async function load_model() {
     // model = await tf.loadLayersModel("../model/rnn/rnn.json");
     show_loading_overlay();
-    model = await tf.loadLayersModel("../model/cnn/cnn.json");
+    model = await tf.loadLayersModel("../model/cnn/json/model.json");
     await model.compile({
                       optimizer: 'adam',
                       loss: 'sparseCategoricalCrossentropy',
@@ -43,7 +43,7 @@ async function fit(input) {
     let tensor = extract();
     show_loading_overlay();
     await model.fit(tensor.reshape([1, 28, 28, 1]), tf.tensor(parseInt(input)).reshape([1, 1]), {
-        epoch: 1
+        epoch: 10
     });
     hide_loading_overlay();
     // NOTE:    silent update model unable to achieve
