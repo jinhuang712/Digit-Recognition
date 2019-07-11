@@ -1,12 +1,9 @@
 let canvas;
 let ctx;
 
-// todo fix initial stutter
+// todo fix initial slow painting response
 
 // todo update model to achieve better accuracy
-
-// todo update save model to tfjs readable model
-//      allows for model testing convenience
 
 // todo fix initial ReferenceError: require is not defined
 
@@ -20,6 +17,7 @@ window.onload = async function () {
     correction.onclick = async function () {
         let input = prompt("What is the correct answer?");
         if (input != null) {
+            // todo fit show overlay still unresponsive
             await fit(input);
         }
     };
