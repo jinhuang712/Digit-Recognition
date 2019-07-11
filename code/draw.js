@@ -5,7 +5,7 @@ function load_canvas() {
     canvas.addEventListener("mouseup", finishPainting);
     canvas.addEventListener("mousemove", draw);
 
-    ctx.lineWidth = 12;
+    ctx.lineWidth = 10;
     ctx.lineCap = "round";
     canvas.style.cursor = "crosshair";
 

@@ -1,13 +1,8 @@
-// todo improve inconsistent trim
 function centralize(imageData, scaled_image) {
     let scale_ratio = 196 / 28;
     let corners = find_corners(scaled_image);
-    let center_cord = find_center(corners);
 
     // convert to absolute coordinates
-    for (let item of center_cord) {
-        item = (item * scale_ratio) | 0;
-    }
     for (let i = 0; i < 4; i++) {
         corners[i] = (corners[i] * scale_ratio) | 0;
     }
@@ -36,7 +31,7 @@ function find_corners(image) {
     let corners = [28, 28, 0, 0]; // top, left, down, right
     for (let i = 0; i < 28; i++) {
         for (let j = 0; j < 28; j++) {
-            if (image[i][j] !== 255) {
+            if (image[i][j] === 0) {
                 continue;
             }
             if (j < corners[0]) corners[0] = j;
@@ -47,15 +42,9 @@ function find_corners(image) {
     }
     if (corners.toString() === [28, 28, 0, 0].toString())
         corners = [3, 3, 25, 25];
+    corners[2] += 1;
+    corners[3] += 1;
     return corners;
-}
-
-// find the center given 4 corners
-function find_center(corners) {
-    let result = [0, 0]; // x, y
-    result[0] = corners[1] + corners[3] / 2;
-    result[1] = corners[0] + corners[2] / 2;
-    return result;
 }
 
 function expand_absolute_corners(absolute_corner) {
