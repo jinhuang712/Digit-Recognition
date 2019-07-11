@@ -1,6 +1,8 @@
 let canvas;
 let ctx;
 
+// todo @feature multiple digits recognition
+
 // todo fix initial slow painting response
 
 // todo update model to achieve better accuracy

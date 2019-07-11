@@ -1,5 +1,5 @@
 function centralize(imageData, scaled_image) {
-    let scale_ratio = 196 / 28;
+    let scale_ratio = canvas.width / 28;
     let corners = find_corners(scaled_image);
 
     // convert to absolute coordinates

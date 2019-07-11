@@ -18,8 +18,8 @@ function scale(image_grey_scaled) {
 function get_grey_scaled_image(imageData) {
     let imageData_grey_scaled = make_array([imageData.width, imageData.height], 0);
     for (let i = 0; i < imageData.data.length; i += 4) {
-        let x = Math.floor(i / 4 / 196);
-        let y = Math.floor(i / 4 % 196);
+        let x = Math.floor(i / 4 / canvas.width);
+        let y = Math.floor(i / 4 % canvas.height);
         imageData_grey_scaled[x][y] = imageData.data[i + 3];
     }
     return imageData_grey_scaled;
