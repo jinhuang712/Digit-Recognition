@@ -17,6 +17,7 @@ window.onload = async function() {
     load_canvas();
     await load_model();
     setInterval(predict, 100);
+    setInterval(display_input_tensor, 10);
     let correction = document.getElementById("correction");
     correction.onclick = async function() {
         let input = prompt("What is the correct answer?");

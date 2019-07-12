@@ -20,7 +20,6 @@ async function predict() {
         return;
     }
     let input = tf.tensor2d(extract());
-    display_input_tensor();
     // let output = await model.predict(input.reshape([1, 28, 28]));
     let output = await model.predict(input.reshape([1, 28, 28, 1]));
     // console.log(output);
